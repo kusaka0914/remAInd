@@ -2,6 +2,8 @@
 
 ■作品の動作確認/紹介映像
 
+<img width="1143" height="636" alt="スクリーンショット 2026-01-09 18 32 26" src="https://github.com/user-attachments/assets/2d768a6f-54b3-4ff8-bc24-dcfb04b1def5" />
+
 YouTube上からご覧いただけます。
 
 https://youtu.be/r8D5nYJHqN8?si=6MFuqUmNTzspWprk
