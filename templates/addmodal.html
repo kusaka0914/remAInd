@@ -2,22 +2,114 @@
 <link rel="stylesheet" href="{% static 'css/addmodal.css' %}">
 <div id="addModal" class="modal">
     <div class="modal-content">
-        <h2>追加する問題集を選択</h2>
-        <input type="text" placeholder="問題集検索" class="search-input">
+        <div class="modal-content-flex">
+            <h2>追加する問題集を選択</h2>
+            <div class="search-container">
+                <input type="text" placeholder="問題集検索" class="search-input">
+                <button onclick="filterCollections()" class="search-button">検索</button>
+                <button onclick="clearCollections()" class="clear-button">条件クリア</button>
+            </div>
+        </div>
         <div class="question-collection">
             <!-- 繰り返し要素の例 -->
-            <div class="collection-item">
-                <input type="radio" name="collection" id="collection1">
-                <label for="collection1">
-                    <img src="{% static 'images/book_icon.png' %}" alt="問題集アイコン">
-                    <p>苦手な問題集</p>
-                </label>
+            {% for question_set in question_sets %}
+            <div class="collection-item" data-name="{{ question_set.name }}">
+                <div class="collection-radio-container">
+                    <input type="checkbox" name="collection" id="collection{{ forloop.counter }}" class="collection-radio">
+                    <label for="collection{{ forloop.counter }}">
+                        <div class="collection-icon-container">
+                            <img src="{% static 'images/select_book.png' %}" alt="問題集アイコン" class="collection-icon">                        
+                            <p>{{ question_set.name }}</p>
+                        </div>
+                    </label>
+                </div>
             </div>
+            {% empty %}
+            <div class="collection-item-empty">
+                <div class="collection-radio-container" style="margin: 0;margin-left: 1vw;">                    
+                    <p>問題集がありません</p>
+                </div>
+            </div>
+            {% endfor %}
             <!-- 他のアイテムも同様に追加 -->
         </div>
         <div class="button-container">
-            <button class="cancel-button">キャンセル</button>
-            <button class="add-button">追加</button>
+            <button class="cancel-button-add">キャンセル</button>
+            <button class="add-button-add">追加</button>
         </div>
     </div>
 </div>
+<script>
+    const addModal = document.getElementById('addModal');
+    const cancelButtonAdd = document.querySelector('.cancel-button-add');
+    const addButtonAdd = document.querySelector('.add-button-add');
+
+    cancelButtonAdd.addEventListener('click', () => {
+        addModal.style.display = 'none';
+        createBookButton.style.display = 'flex';
+        body.style.overflow = 'auto';
+        questionItems.forEach(item => {
+            item.querySelector('.radio-button').remove();
+        });
+    });
+    function filterCollections() {
+    const input = document.querySelector('.search-input');
+    const filter = input.value.toLowerCase();
+    const items = document.querySelectorAll('.collection-item');
+
+    items.forEach(item => {
+        const name = item.getAttribute('data-name').toLowerCase();
+        if (name.includes(filter)) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+function clearCollections() {
+    const items = document.querySelectorAll('.collection-item');
+    items.forEach(item => {
+        item.style.display = '';
+    });
+}
+addButtonAdd.addEventListener('click', () => {
+        const selectedQuestions = [];
+        const selectedCollections = [];
+        const questionCheckboxes = document.querySelectorAll('.radio-button:checked');
+        const collectionCheckboxes = document.querySelectorAll('.collection-radio:checked');
+        if (collectionCheckboxes.length > 0) {
+        questionCheckboxes.forEach(checkbox => {
+            selectedQuestions.push(checkbox.value);
+        });
+        collectionCheckboxes.forEach(checkbox => {
+            selectedCollections.push(checkbox.id.replace('collection', ''));
+        });
+
+        // サーバーにデータを送信
+        fetch('/add-to-questionset/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({ questions: selectedQuestions, collections: selectedCollections })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('問題集に追加されました');
+                addModal.style.display = 'none';
+                createBookButton.style.display = 'flex';
+                body.style.overflow = 'auto';
+                questionItems.forEach(item => {
+                    item.querySelector('.radio-button').remove();
+                });
+            } else {
+                alert('追加に失敗しました');
+            }
+        });
+    } else {
+        alert('問題集を選択してください');
+    }
+});
+</script>

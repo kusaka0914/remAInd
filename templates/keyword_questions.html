@@ -7,6 +7,7 @@
 </head>
 <body>
     {% include 'addmodal.html' %}
+    {% include 'createworkbook.html' %}
     <header>
         <h1><a href="{% url 'profile' %}" class="profile-header-title">generAIte</a></h1>
         <nav>
@@ -43,47 +44,49 @@
         <ul>
             {% for question in questions %}
                 <li class="question-item">
-                    <div class="image-container">
-                        <img src="{% static 'images/bar_pink.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
-                        <img src="{% static 'images/bar_purple.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
-                        <img src="{% static 'images/bar_blue.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
-                        <img src="{% static 'images/bar_water.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
-                        <img src="{% static 'images/bar_rightblue.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
-                        <img src="{% static 'images/bar_green.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
-                        <img src="{% static 'images/bar_yellow.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
-                        <img src="{% static 'images/bar_orange.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
-                        <img src="{% static 'images/bar_red.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
-                        <p class="question-text">{{ question.text|truncatechars:31 }}</p>
-                        <p class="first-text">初回</p>
-                        <p class="retry-text">再挑戦後</p>
-                        {% if question.is_correct_first == True %}
-                            <img src="{% static 'images/circle_small.png' %}" alt="正解" class="circle-img-first">
-                        {% elif question.is_correct_first == False %}
-                            <img src="{% static 'images/cross_small.png' %}" alt="不正解" class="cross-img-first">
-                        {% else %}
-                            <p class="correct-text-first">未</p>
-                        {% endif %}
-                        {% if question.is_correct == True %}
-                            <img src="{% static 'images/circle_small.png' %}" alt="正解" class="circle-img-second">
-                        {% elif question.is_correct == False %}
-                            <img src="{% static 'images/cross_small.png' %}" alt="不正解" class="cross-img-second">
-                        {% else %}
-                            <p class="correct-text-second">未</p>
-                        {% endif %}
-                        <form action="{% url 'explanation' keyword=keyword question_number=question.question_number %}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="retry" value="true">
-                            <input type="hidden" name="question_text" value="{{ question.original_text }}">
-                            <input type="hidden" name="question_id" value="{{ question.question_id }}">
-                            <button class="explanation-button">解説確認</button>
-                        </form>
-                        <form action="{% url 'question' keyword=keyword question_number=question.question_number %}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="question_text" value="{{ question.original_text }}">
-                            <input type="hidden" name="retry" value="true"> <!-- retry情報を追加 -->
-                            <input type="hidden" name="question_id" value="{{ question.question_id }}">
-                            <button class="retry-button">再挑戦</button>
-                        </form>
+                    <div class="question-item-flex">
+                        <div class="image-container" data-radio="radio{{ forloop.counter }}">
+                            <img src="{% static 'images/bar_pink.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
+                            <img src="{% static 'images/bar_purple.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
+                            <img src="{% static 'images/bar_blue.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
+                            <img src="{% static 'images/bar_water.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
+                            <img src="{% static 'images/bar_rightblue.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
+                            <img src="{% static 'images/bar_green.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
+                            <img src="{% static 'images/bar_yellow.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
+                            <img src="{% static 'images/bar_orange.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
+                            <img src="{% static 'images/bar_red.png' %}" alt="問題アイコン" class="question-background" style="display: none;">
+                            <p class="question-text">{{ question.text|truncatechars:31 }}</p>
+                            <p class="first-text">初回</p>
+                            <p class="retry-text">再挑戦後</p>
+                            {% if question.is_correct_first == True %}
+                                <img src="{% static 'images/circle_small.png' %}" alt="正解" class="circle-img-first">
+                            {% elif question.is_correct_first == False %}
+                                <img src="{% static 'images/cross_small.png' %}" alt="不正解" class="cross-img-first">
+                            {% else %}
+                                <p class="correct-text-first">未</p>
+                            {% endif %}
+                            {% if question.is_correct == True %}
+                                <img src="{% static 'images/circle_small.png' %}" alt="正解" class="circle-img-second">
+                            {% elif question.is_correct == False %}
+                                <img src="{% static 'images/cross_small.png' %}" alt="不正解" class="cross-img-second">
+                            {% else %}
+                                <p class="correct-text-second">未</p>
+                            {% endif %}
+                            <form action="{% url 'explanation' keyword=keyword question_number=question.question_number %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="retry" value="true">
+                                <input type="hidden" name="question_text" value="{{ question.original_text }}">
+                                <input type="hidden" name="question_id" value="{{ question.question_id }}">
+                                <button class="explanation-button">解説確認</button>
+                            </form>
+                            <form action="{% url 'question' keyword=keyword question_number=question.question_number %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="question_text" value="{{ question.original_text }}">
+                                <input type="hidden" name="retry" value="true"> <!-- retry情報を追加 -->
+                                <input type="hidden" name="question_id" value="{{ question.question_id }}">
+                                <button class="retry-button">再挑戦</button>
+                            </form>
+                        </div>
                     </div>
                 </li>
             {% empty %}
@@ -93,7 +96,7 @@
     </div>
 </body>
 <script>
-    const questionItems = document.querySelectorAll('.question-item');
+    const questionItems = document.querySelectorAll('.question-item-flex');
     questionItems.forEach((item, index) => {
         const images = item.querySelectorAll('.question-background');
         const imageIndex = index % 9; // 0から8の範囲でインデックスを取得
@@ -103,16 +106,79 @@
     const cancelButton = document.querySelector('.create-book-button-cancel');
     const addButton = document.querySelector('.create-book-button-add');
     const createButton = document.querySelector('.create-book-button-create');
+    const body = document.querySelector('body');
+    const createWorkBookModal = document.getElementById('createworkbookModal');
     createBookButton.addEventListener('click', () => {
-        createBookButton.style.display = 'none';
-        cancelButton.style.display = 'block';
-        addButton.style.display = 'block';
-        createButton.style.display = 'block';
+    createBookButton.style.display = 'none';
+    cancelButton.style.display = 'block';
+    addButton.style.display = 'block';
+    createButton.style.display = 'block';
+
+    questionItems.forEach((item, index) => {
+        if (!item.querySelector('.radio-button')) {
+            const radioButton = document.createElement('input');
+            radioButton.type = 'checkbox'; // ラジオボタンに変更
+            radioButton.name = 'select-image';
+            radioButton.id = `radio${index}`; // ユニークなIDを設定
+            radioButton.classList.add('radio-button');
+            // .image-containerを取得
+            const imageContainer = item.querySelector('.image-container');
+            if (imageContainer) {
+                const questionText = imageContainer.querySelector('.question-text').textContent;
+                radioButton.value = questionText;
+            }
+            
+            item.insertAdjacentElement('afterbegin', radioButton);
+        }
     });
+
+    const imageContainers = document.querySelectorAll('.image-container');
+
+    imageContainers.forEach((container, index) => {
+        container.setAttribute('data-radio', `radio${index}`); // data-radio属性を設定
+
+        container.addEventListener('click', () => {
+            const radioId = container.getAttribute('data-radio');
+            const radioButton = document.getElementById(radioId);
+            if (radioButton.checked) {
+                radioButton.checked = false;
+            } else {
+                radioButton.checked = true;
+            }
+        });
+    });
+});
     cancelButton.addEventListener('click', () => {
         createBookButton.style.display = 'flex';
         cancelButton.style.display = 'none';
         addButton.style.display = 'none';
         createButton.style.display = 'none';
+        questionItems.forEach(item => {
+            item.querySelector('.radio-button').remove();
+        });
+    });
+    addButton.addEventListener('click', () => {
+        const radioButton = document.querySelectorAll('.radio-button:checked');
+        if (radioButton.length > 0) {
+            addModal.style.display = 'flex';
+            body.style.overflow = 'hidden';
+            cancelButton.style.display = 'none';
+            addButton.style.display = 'none';
+            createButton.style.display = 'none';
+        } else {
+            alert('問題を選択してください');
+        }
+    });
+    createButton.addEventListener('click', () => {
+        const radioButton = document.querySelectorAll('.radio-button:checked');
+        if (radioButton.length > 0) {
+            createWorkBookModal.style.display = 'flex';
+            body.style.overflow = 'hidden';
+            cancelButton.style.display = 'none';
+            addButton.style.display = 'none';
+            createButton.style.display = 'none';
+        } else {
+            alert('問題を選択してください');
+        }
     });
 </script>

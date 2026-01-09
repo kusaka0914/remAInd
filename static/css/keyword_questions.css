@@ -333,3 +333,17 @@ form {
     right: 14.15vw;
 }
 
+.question-item-flex {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    max-height: 4.23vw;
+    margin-bottom: 2.11vw;
+}
+
+.radio-button {
+    width: 7.11vw;
+    height: 7.11vw;
+    margin-right:  1vw;
+    margin-bottom: 3vw;
+}

@@ -11,6 +11,8 @@ env/
 db.sqlite3
 /media/
 staticfiles/
+logs/
+!logs/.gitkeep
 
 # IDEs
 .vscode/
