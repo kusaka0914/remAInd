@@ -201,7 +201,7 @@ body {
 
 .difficulty-select {
     position: absolute;
-    top: 45%;
+    top: 2.3vw;
     transform: translateY(-50%);
     right: 6.19vw;
     font-size: 0.92vw;

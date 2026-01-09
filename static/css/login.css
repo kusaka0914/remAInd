@@ -20,17 +20,17 @@ body {
 
 .login-page h2 {
     color: white;
-    font-size: 3.3vw;
+    font-size: 2.64vw;
     font-weight: bold;
     text-align: center;
     letter-spacing: 0.1em;
     margin: 0;
-    margin-bottom: 2.64vw;
+    margin-bottom: 1.56vw;
 }
 
 .login-page label {
     color: white;
-    font-size: 1.58vw;
+    font-size: 1.32vw;
     font-weight: bold;
     text-align: center;
     letter-spacing: 0.1em;
@@ -42,7 +42,7 @@ body {
     margin-top: 0.87vw;
     margin-bottom: 1.56vw;
     width: 52.9vw;
-    height: 4.62vw;
+    height: 4.23vw;
     border-radius: 0.87vw;
     outline: none;
     border: none;
@@ -53,12 +53,12 @@ body {
 .login-button {
     color: white;
     margin-top: 1.56vw;
-    width: 17.4vw;
-    height: 5.29vw;
+    width: 11.92vw;
+    height: 4.23vw;
     border-radius: 0.87vw;
     outline: none;
     border: none;
-    font-size: 1.85vw;
+    font-size: 1.58vw;
     background-color: #1C4E87;
     font-weight: bold;
 }
@@ -72,4 +72,27 @@ body {
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-check, .password-close {
+    position: absolute;
+    top: 50%;
+    right: 1.05vw;
+    transform: translateY(-50%);
+    width: 2.64vw;
+    height: 2.64vw;
+    padding-bottom: 0.87vw;
+}
+
+.password-check:hover, .password-close:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.password-close {
+    display: none;
 }

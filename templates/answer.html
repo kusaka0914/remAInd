@@ -15,9 +15,11 @@
                 <br>
                 <h3 class="question-counter">解答・解説</h3>
             </div>
+            {% if show_back_link %}
             <a href="{% url 'generate' %}"><div class="back-to-top">
                     トップに戻る
             </div></a>
+            {% endif %}
             
             <div class="answer-question">
                 {{ question|linebreaks }}
@@ -25,12 +27,16 @@
 
             <div class="answer-result {% if is_correct %}correct{% else %}incorrect{% endif %}">
                 <h2>正解の選択肢: ({{ correct_option }})</h2>
+                {% if show_user_answer %}
                 <h2>あなたの回答 ({{ user_answer }}) は{{ is_correct|yesno:"正解,不正解" }}です。</h2>
+                {% endif %}
             </div>
+            {% if show_images %}
             {% if is_correct %}
             <img src="{% static 'images/correct.png' %}" alt="正解" class="correct-image">
             {% else %}
             <img src="{% static 'images/incorrect.png' %}" alt="不正解" class="incorrect-image">
+            {% endif %}
             {% endif %}
 
 
@@ -58,7 +64,9 @@
                     {% if is_retry == 'True' %}
                         <input type="hidden" name="retry" value="true"> <!-- retry情報を追加 -->
                     {% endif %}
+                    {% if show_next_button %}
                     <button type="submit" class="answer-button next-button">次の問題へ</button>
+                    {% endif %}
                 </form>
                 {% else %}
                 <form action="{% url 'generate' %}" method="POST">

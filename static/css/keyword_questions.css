@@ -4,6 +4,7 @@ body {
     padding: 0;
     background-color: #ECEDF1;
     overflow-x: hidden;
+    padding-bottom: 5vw;
 }
 
 header {
@@ -271,4 +272,78 @@ form {
 .keyword-questions-flex {
     display: flex;
     align-items: center;
+}
+
+.create-book-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 1.58vw;
+    margin-bottom: 1.58vw;
+}
+
+.create-book-button-container:hover {
+    opacity: 0.6;
+}
+
+.create-book-button {
+    width: 2.64vw;
+    height: 2.64vw;
+    margin-bottom: 0.2vw;
+}
+
+.create-book-button-text {
+    font-size: 1.19vw;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.create-book-button-cancel, .create-book-button-add, .create-book-button-create {
+    position: fixed;
+    width: 19.84vw;
+    height: 4.23vw;
+    background-color: #1C4E87;
+    z-index: 100;
+    color: white;
+    border: none;
+    border-radius: 1.58vw;
+    font-size: 1.58vw;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    display: none;
+}
+
+.create-book-button-cancel:hover, .create-book-button-add:hover, .create-book-button-create:hover {
+    opacity: 0.6;
+}
+
+.create-book-button-cancel {
+    bottom: 2.64vw;
+    left: 14.15vw;
+}
+
+.create-book-button-add {
+    bottom: 2.64vw;
+    left: 40.15vw;
+}
+
+.create-book-button-create {
+    bottom: 2.64vw;
+    right: 14.15vw;
+}
+
+.question-item-flex {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    max-height: 4.23vw;
+    margin-bottom: 2.11vw;
+}
+
+.radio-button {
+    width: 7.11vw;
+    height: 7.11vw;
+    margin-right:  1vw;
+    margin-bottom: 3vw;
 }

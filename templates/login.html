@@ -16,7 +16,11 @@
             <br>
             <label for="password">パスワード</label>
             <br>
-            <input type="password" name="password" id="password" required>
+            <div class="password-container">
+                <input type="password" name="password" id="password" required>
+                <img src="{% static 'images/eye.png' %}" alt="確認" class="password-check" onclick="togglePasswordVisibility()">
+                <img src="{% static 'images/closed_eye.png' %}" alt="閉じる" class="password-close" onclick="togglePasswordVisibility()">
+            </div>
             <br>
             <div class="login-button-container">
                 <button type="submit" class="login-button">ログイン</button>
@@ -27,4 +31,21 @@
         {% endif %}
     </div>
 </body>
+<script>
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('password');
+        const passwordType = passwordInput.getAttribute('type');
+        const passwordClose = document.querySelector('.password-close');
+        const passwordCheck = document.querySelector('.password-check');
+        if (passwordType === 'password') {
+            passwordInput.setAttribute('type', 'text');
+            passwordClose.style.display = 'block';
+            passwordCheck.style.display = 'none';
+        } else {
+            passwordInput.setAttribute('type', 'password');
+            passwordClose.style.display = 'none';
+            passwordCheck.style.display = 'block';
+        }
+    }
+</script>
 </html>

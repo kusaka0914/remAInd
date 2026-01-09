@@ -1,0 +1,81 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/createworkbook.css' %}">
+<div id="createworkbookModal" class="modal-create">
+    <div class="modal-content-create">
+        <div class="modal-left">
+            <h2>問題集新規作成</h2>
+            <p>問題集の名前</p>
+            <input type="text" class="workbook-name" placeholder="例: お気に入りの問題集(10字以内)">
+            <p>著者名(任意)</p>
+            <input type="text" class="author-name" placeholder="例: 山田太郎(6字以内)">
+            <p>出版社名(任意)</p>
+            <input type="text" class="publisher-name" placeholder="例: 山田出版(4字以内)">
+            <p>問題集の説明</p>
+            <textarea type="text" class="workbook-description" placeholder="例: 自分の好きな問題を集めてみました。"></textarea>
+            <div class="button-container">
+                <button class="cancel-button-create">キャンセル</button>
+                <button class="create-button-create">作成</button>
+            </div>
+        </div>
+        <div class="modal-right">
+            <div class="workbook-image-container">
+                <img src="{% static 'images/spine.png' %}" alt="背表紙" class="spine-image">
+                <img src="{% static 'images/cover.png' %}" alt="表紙" class="cover-image">
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const createButtonCreate = document.querySelector('.create-button-create');
+    const cancelButtonCreate = document.querySelector('.cancel-button-create');
+    const createworkbookModal = document.getElementById('createworkbookModal');
+
+
+    cancelButtonCreate.addEventListener('click', () => {
+        createworkbookModal.style.display = 'none';
+        createBookButton.style.display = 'flex';
+        body.style.overflow = 'auto';
+        questionItems.forEach(item => {
+            item.querySelector('.radio-button').remove();
+        });
+    });
+    createButtonCreate.addEventListener('click', () => {
+        const name = document.querySelector('.workbook-name').value;
+        const author = document.querySelector('.author-name').value;
+        const publisher = document.querySelector('.publisher-name').value;
+        const description = document.querySelector('.workbook-description').value;
+        const selectedQuestions = [];
+        const questionCheckboxes = document.querySelectorAll('.radio-button:checked');
+        questionCheckboxes.forEach(checkbox => {
+            selectedQuestions.push(checkbox.value);
+        });
+
+    fetch('/create-questionset/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({
+            name: name,
+            author: author,
+            publisher: publisher,
+            description: description,
+            questions: selectedQuestions
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('新しい問題集が作成されました');
+            createWorkBookModal.style.display = 'none';
+            body.style.overflow = 'auto';
+            questionItems.forEach(item => {
+                item.querySelector('.radio-button').remove();
+            });
+        } else {
+            alert('作成に失敗しました');
+        }
+    });
+});
+</script>

@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Noto Sans', sans-serif;
+    overflow: hidden;
 }
 
 .signup-page {
@@ -20,17 +21,17 @@ body {
 
 .signup-page h1 {
     color: white;
-    font-size: 3.3vw;
+    font-size: 2.64vw;
     font-weight: bold;
     text-align: center;
     letter-spacing: 0.1em;
     margin: 0;
-    margin-bottom: 2.64vw;
+    margin-bottom: 1.56vw;
 }
 
 .signup-page label {
     color: white;
-    font-size: 1.58vw;
+    font-size: 1.32vw;
     font-weight: bold;
     text-align: center;
     letter-spacing: 0.1em;
@@ -42,7 +43,7 @@ body {
     margin-top: 0.87vw;
     margin-bottom: 1.56vw;
     width: 52.9vw;
-    height: 4.62vw;
+    height: 4.23vw;
     border-radius: 0.87vw;
     outline: none;
     border: none;
@@ -53,12 +54,12 @@ body {
 .signup-button {
     color: white;
     margin-top: 1.56vw;
-    width: 17.4vw;
-    height: 5.29vw;
+    width: 9.92vw;
+    height: 4.23vw;
     border-radius: 0.87vw;
     outline: none;
     border: none;
-    font-size: 1.85vw;
+    font-size: 1.58vw;
     background-color: #1C4E87;
     font-weight: bold;
 }
@@ -72,4 +73,38 @@ body {
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+.password-container {
+    position: relative;
+    height: 4.23vw;
+}
+
+.password-check-first, .password-check-second {
+    position: absolute;
+    right: 2.11vw;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.64vw;
+    height: 2.64vw;
+}
+
+.password-check-first:hover, .password-check-second:hover {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.password-close-first, .password-close-second {
+    position: absolute;
+    right: 2.11vw;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.64vw;
+    height: 2.64vw;
+    display: none;
+}
+
+.password-close-first:hover, .password-close-second:hover {
+    cursor: pointer;
+    opacity: 0.6;
 }

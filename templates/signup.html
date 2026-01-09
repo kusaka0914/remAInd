@@ -16,11 +16,19 @@
             <br>
             <label for="password">パスワード</label>
             <br>
-            <input type="password" name="password" id="password" required>
+            <div class="password-container">
+                <input type="password" name="password" id="password" required>
+                <img src="{% static 'images/eye.png' %}" alt="確認" class="password-check-first" onclick="togglePasswordVisibilityFirst()">
+                <img src="{% static 'images/closed_eye.png' %}" alt="閉じる" class="password-close-first" onclick="togglePasswordVisibilityFirst()">
+            </div>
             <br>
             <label for="password_confirm">パスワード確認</label>
             <br>
-            <input type="password" name="password_confirm" id="password_confirm" required>
+            <div class="password-container">
+                <input type="password" name="password_confirm" id="password_confirm" required>
+                <img src="{% static 'images/eye.png' %}" alt="確認" class="password-check-second" onclick="togglePasswordVisibilitySecond()">
+                <img src="{% static 'images/closed_eye.png' %}" alt="閉じる" class="password-close-second" onclick="togglePasswordVisibilitySecond()">
+            </div>
             <br>
             <div class="signup-button-container">
                 <button type="submit" class="signup-button">登録</button>
@@ -31,3 +39,37 @@
         {% endif %}
     </div>
 </body>
+<script>
+    function togglePasswordVisibilityFirst() {
+        const passwordInput = document.getElementById('password');
+        const passwordType = passwordInput.getAttribute('type');
+        const passwordCloseFirst = document.querySelector('.password-close-first');
+        const passwordCheckFirst = document.querySelector('.password-check-first');
+        
+        if (passwordType === 'password') {
+            passwordInput.setAttribute('type', 'text');
+            passwordCloseFirst.style.display = 'block';
+            passwordCheckFirst.style.display = 'none';
+        } else {
+            passwordInput.setAttribute('type', 'password');
+            passwordCloseFirst.style.display = 'none';
+            passwordCheckFirst.style.display = 'block';
+        }
+    }
+    function togglePasswordVisibilitySecond() {
+        const passwordInput = document.getElementById('password_confirm');
+        const passwordType = passwordInput.getAttribute('type');
+        const passwordCloseSecond = document.querySelector('.password-close-second');
+        const passwordCheckSecond = document.querySelector('.password-check-second');
+
+        if (passwordType === 'password') {
+            passwordInput.setAttribute('type', 'text');
+            passwordCloseSecond.style.display = 'block';
+            passwordCheckSecond.style.display = 'none';
+        } else {
+            passwordInput.setAttribute('type', 'password');
+            passwordCloseSecond.style.display = 'none';
+            passwordCheckSecond.style.display = 'block';
+        }
+    }
+</script>
